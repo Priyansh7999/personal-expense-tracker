@@ -43,4 +43,22 @@ async function getExpenseDetails(req, res) {
     });
   }
 }
-module.exports = {createExpense,getAllExpenses,getExpenseDetails}
+async function deleteExpense(req, res) {
+  try {
+    const userId = 1; 
+    const deletedExpense = await expenseService.deleteExpense(userId, req.params.id);
+
+    return res.status(200).json({
+      message: 'Expense deleted successfully',
+      expense: deletedExpense,
+    });
+  } catch (err) {
+    return res.status(404).json({
+      error: {
+        code: 'EXPENSE_NOT_FOUND',
+        message: err.message,
+      }
+    });
+  }
+}
+module.exports = {createExpense,getAllExpenses,getExpenseDetails,deleteExpense}
