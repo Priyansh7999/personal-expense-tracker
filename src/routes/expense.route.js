@@ -6,5 +6,6 @@ const { CreateExpenseMiddleware } = require('../middlewares/expense.middleware.j
 
 router.post('/', CreateExpenseMiddleware, expenseController.createExpense);
 router.get('/',expenseController.getAllExpenses)
-router.get('/:id', expenseController.getExpenseDetails); 
+router.get('/:id', expenseController.getExpenseDetails);
+router.delete('/:id', expenseController.deleteExpense);
 module.exports = router;
