@@ -16,13 +16,25 @@ const amountValidation = z.number({required_error: 'Amount is required',invalid_
 
 
 const transactionDateValidation = z.string().refine((dateStr) => {
-  const [year, month, day] = dateStr.split('-').map(Number);
-  const date = new Date(year, month - 1, day)
+  const date = new Date(dateStr);
   if (isNaN(date.getTime())) return false;
   const now = new Date();
   const fyStartYear = now.getMonth() >= 3 ? now.getFullYear() : now.getFullYear() - 1;
-  const fyStart = new Date(fyStartYear, 3, 1);
+  const fyStart = new Date(fyStartYear, 3, 1);   
   const fyEnd = new Date(fyStartYear + 1, 2, 31);
-
   return date >= fyStart && date <= fyEnd;
-}, { message: 'Transaction date must be within current financial year' });
+}, {
+  message: 'Transaction date must be within the current financial year'
+});
+
+const createExpenseSchema = z
+  .object({
+    title: titleValidation,
+    description: descriptionValidation,
+    category: categoryValidation,
+    paymentMethod: paymentMethodValidation,
+    amount: amountValidation,
+    transactionDate: transactionDateValidation,
+  })
+
+module.exports = {createExpenseSchema};
