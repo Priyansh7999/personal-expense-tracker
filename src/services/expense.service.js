@@ -28,7 +28,7 @@ async function createExpense(userId, expenseData) {
   };
 }
 
-async function getAllExpenses(){
-  return await expenseRepository.getAllExpenses();
+const getAllExpenses=async(userId, queryParams)=>{
+  return await expenseRepository.getAllExpenses(userId, queryParams);
 }
 module.exports = { createExpense,getAllExpenses};
