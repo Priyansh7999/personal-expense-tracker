@@ -7,5 +7,9 @@ class ExpenseRepository {
     const result = await db.select().from(categories).where(eq(categories.name, name));
     return result[0] || null;
   }
+  async createExpense(expenseData){
+    const [inserted] = await db.insert(expenses).values(expenseData).returning();
+    return inserted;
+  }
 }
 module.exports=new ExpenseRepository();
