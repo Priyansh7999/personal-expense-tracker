@@ -28,4 +28,19 @@ async function getAllExpenses(req, res){
     });
   }
 }
-module.exports = {createExpense,getAllExpenses}
+
+async function getExpenseDetails(req, res) {
+  try {
+    const userId = 1;
+    const expense = await expenseService.getExpenseById(userId, req.params.id);
+    return res.status(200).json(expense);
+  } catch (err) {
+    return res.status(404).json({
+      error: {
+        code: 'EXPENSE_NOT_FOUND',
+        message: err.message,
+      },
+    });
+  }
+}
+module.exports = {createExpense,getAllExpenses,getExpenseDetails}
