@@ -15,7 +15,7 @@ class ExpenseRepository {
   }
 
   async getAllExpenses(userId, queryParams){
-    let result = db.select().from(expenses);
+    let result = db.select().from(expenses).where(eq(expenses.userId,userId));
     if (queryParams.category) {
       const categoryName = queryParams.category.toLowerCase().trim();
       const category = await this.getCategoryByName(categoryName);
@@ -32,6 +32,16 @@ class ExpenseRepository {
     if (queryParams.maxAmount) result = result.where(lte(expenses.amount, queryParams.maxAmount));
     
     return await result;
+  }
+
+  async getExpenseById(expenseId, userId) {
+    const [expense] = await db
+      .select()
+      .from(expenses)
+      .where(eq(expenses.id, expenseId))
+      .where(eq(expenses.userId, userId));
+
+    return expense || null;
   }
 }
 module.exports=new ExpenseRepository();
