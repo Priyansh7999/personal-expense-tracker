@@ -39,4 +39,11 @@ const getExpenseById=async(userId, expenseId)=>{
   return expense;
 }
 
-module.exports = { createExpense,getAllExpenses,getExpenseById};
+const deleteExpense=async(userId, expenseId)=>{
+  const deletedExpense = await expenseRepository.deleteExpense(expenseId, userId);
+  if (!deletedExpense) {
+    throw new Error(`Expense with id '${expenseId}' not found`);
+  }
+  return deletedExpense;
+}
+module.exports = { createExpense,getAllExpenses,getExpenseById,deleteExpense};
