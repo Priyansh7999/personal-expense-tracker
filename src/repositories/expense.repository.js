@@ -12,5 +12,9 @@ class ExpenseRepository {
     const [inserted] = await db.insert(expenses).values(expenseData).returning();
     return inserted;
   }
+
+  async getAllExpenses(){
+    return await db.select().from(expenses);
+  }
 }
 module.exports=new ExpenseRepository();
