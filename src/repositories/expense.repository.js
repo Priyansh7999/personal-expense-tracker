@@ -1,7 +1,7 @@
 const db = require('../db/index');
 const { expenses } = require('../models/schema/expenses.schema');
 const { categories } = require('../models/schema/categories.schema');
-const { eq, gte, lte } = require('drizzle-orm');
+const { eq, gte, lte, and } = require('drizzle-orm');
 
 class ExpenseRepository {
   async getCategoryByName(name){
@@ -31,6 +31,11 @@ class ExpenseRepository {
     if (queryParams.maxAmount) result = result.where(lte(expenses.amount, queryParams.maxAmount));
     
     return await result;
+  }
+
+  async getExpenseById(expenseId, userId) {
+    const result = await db.select().from(expenses).where(and(eq(expenses.id, expenseId),eq(expenses.userId, userId)))
+    return result[0] || null;
   }
 }
 module.exports=new ExpenseRepository();
