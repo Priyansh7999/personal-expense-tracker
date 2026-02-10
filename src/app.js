@@ -1,5 +1,11 @@
+// src/app.js
 const express = require('express')
 const app = express();
+
+/** Express application
+*
+* config Middleware & routes
+**/
 
 app.use(express.json());
 
