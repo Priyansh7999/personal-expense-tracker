@@ -31,4 +31,12 @@ async function createExpense(userId, expenseData) {
 const getAllExpenses=async(userId, queryParams)=>{
   return await expenseRepository.getAllExpenses(userId, queryParams);
 }
-module.exports = { createExpense,getAllExpenses};
+const getExpenseById=async(userId, expenseId)=>{
+  const expense = await expenseRepository.getExpenseById(expenseId, userId);
+  if (!expense) {
+    throw new Error(`Expense with id '${expenseId}' not found`);
+  }
+  return expense;
+}
+
+module.exports = { createExpense,getAllExpenses,getExpenseById};
