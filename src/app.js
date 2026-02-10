@@ -1,7 +1,7 @@
 // src/app.js
 const express = require('express')
 const app = express();
-
+const expenseRoute = require('./routes/expense.route');
 /** Express application
 *
 * config Middleware & routes
