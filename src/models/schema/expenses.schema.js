@@ -1,6 +1,5 @@
 const { pgTable, uuid, integer, numeric, varchar, timestamp, date } = require('drizzle-orm/pg-core'); 
 const { categories } = require('./categories.schema');
-const { paymentMethods } = require('./paymentMethods.schema');
 const { users } = require('./users.schema');
 
 const expenses = pgTable('expenses', {
