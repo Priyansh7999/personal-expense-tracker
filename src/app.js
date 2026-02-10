@@ -22,4 +22,5 @@ app.get('/health', (req, res) => {
     });
 });
 
+app.use('/v1/expense',expenseRoute)
 module.exports = app;
