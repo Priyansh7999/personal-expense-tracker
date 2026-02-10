@@ -1,9 +1,9 @@
-const { getCategoryByName, createExpense: createExpenseRepo } = require('../repositories/expense.repository.js');
+const expenseRepository = require('../repositories/expense.repository.js');
 const { v4: uuidv4 } = require('uuid');
 
 async function createExpense(userId, expenseData) {
   const categoryName = expenseData.category;
-  const category = await getCategoryByName(categoryName);
+  const category = await expenseRepository.getCategoryByName(categoryName);
 
   if (!category) {
     throw new Error(`Category '${categoryName}' not found`);
@@ -20,7 +20,7 @@ async function createExpense(userId, expenseData) {
     transactionDate: expenseData.transactionDate,
   };
 
-  const expense = await createExpenseRepo(expensePayload);
+  const expense = await expenseRepository.createExpense(expensePayload);
 
   return {
     ...expense,
@@ -28,4 +28,7 @@ async function createExpense(userId, expenseData) {
   };
 }
 
-module.exports = { createExpense };
+async function getAllExpenses(){
+  return await expenseRepository.getAllExpenses();
+}
+module.exports = { createExpense,getAllExpenses};
