@@ -37,5 +37,10 @@ class ExpenseRepository {
     const result = await db.select().from(expenses).where(and(eq(expenses.id, expenseId),eq(expenses.userId, userId)))
     return result[0] || null;
   }
+
+  async deleteExpense(expenseId, userId) {
+    const result = await db.delete(expenses).where(and(eq(expenses.id, expenseId), eq(expenses.userId, userId))).returning();
+    return result[0] || null;
+  }
 }
 module.exports=new ExpenseRepository();
