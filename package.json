@@ -1,0 +1,27 @@
+{
+  "name": "personal-expence-tracker",
+  "version": "1.0.0",
+  "description": "Build a RESTful API for a Personal Expense Tracker that allows a user to record and manage their expenses. All data must be stored in a database.",
+  "main": "index.js",
+  "dependencies": {
+    "dotenv": "^17.2.4",
+    "express": "^5.2.1"
+  },
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Priyansh7999/personal-expense-tracker.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Priyansh7999/personal-expense-tracker/issues"
+  },
+  "homepage": "https://github.com/Priyansh7999/personal-expense-tracker#readme"
+}
