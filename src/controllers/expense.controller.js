@@ -1,4 +1,4 @@
-
+// src/controllers/expense.controller.js
 const expenseService = require('../services/expense.service');
 async function createExpense(req, res) {
   try {

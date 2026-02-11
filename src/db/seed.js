@@ -1,3 +1,4 @@
+// src/db/seed.js
 const db = require('./index');
 const { categories } = require('../models/schema/categories.schema');
 const { users } = require('../models/schema/users.schema');

@@ -1,3 +1,4 @@
+// src/middlewares/expense.middleware.js
 const { createExpenseSchema } = require('../validations/expense.validation');
 
 const CreateExpenseMiddleware = (req, res, next) => {

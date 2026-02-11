@@ -1,3 +1,4 @@
+// src/validations/expense.validation.js
 const { z } = require('zod');
 
 const PAYMENT_METHODS = ['cash', 'credit card', 'debit card', 'upi'];

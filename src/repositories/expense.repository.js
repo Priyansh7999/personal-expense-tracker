@@ -1,3 +1,4 @@
+// src/repositories/expense.repositories.js
 const db = require('../db/index');
 const { expenses } = require('../models/schema/expenses.schema');
 const { categories } = require('../models/schema/categories.schema');
