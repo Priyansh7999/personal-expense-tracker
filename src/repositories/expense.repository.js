@@ -33,5 +33,10 @@ class ExpenseRepository {
     
     return await result;
   }
+
+  async getExpenseById(id) {
+    const result = await db.select().from(expenses).where(eq(expenses.id, id));
+    return result[0] || null;
+  }
 }
 module.exports=new ExpenseRepository();
