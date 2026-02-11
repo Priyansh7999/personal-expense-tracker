@@ -7,8 +7,9 @@ async function createExpense(userId, expenseData) {
   const category = await getCategoryByName(categoryName);
 
   if (!category) {
-    throw new Error(`Category '${categoryName}' not found`);
+    throw new Error('Invalid category');
   }
+
 
   const expensePayload = {
     id: uuidv4(),
