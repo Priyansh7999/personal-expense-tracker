@@ -1,7 +1,7 @@
 // src/middlewares/expense.middleware.js
 const { createExpenseSchema } = require('../validations/expense.validation');
 
-const CreateExpenseMiddleware = (req, res, next) => {
+const createExpenseMiddleware = (req, res, next) => {
   const result = createExpenseSchema.safeParse(req.body);
   if (!result.success) {
     const error = result.error.issues[0];
@@ -17,4 +17,4 @@ const CreateExpenseMiddleware = (req, res, next) => {
   next();
 };
 
-module.exports = { CreateExpenseMiddleware };
+module.exports = { createExpenseMiddleware };
