@@ -12,7 +12,7 @@ const categoryValidation = z.string().trim().transform((val) => val.toLowerCase(
 const paymentMethodValidation = z.string().trim().transform((val) => val.toLowerCase()).refine((val) => PAYMENT_METHODS.includes(val), {
     message: 'Invalid payment method',
 });
-const amountValidation = z.number({required_error: 'Amount is required',invalid_type_error: 'Amount must be a number',}).positive('Amount must be greater than 0');
+const amountValidation = z.number().positive('Amount must be greater than 0');
 
 
 const transactionDateValidation = z.string().refine((dateStr) => {
