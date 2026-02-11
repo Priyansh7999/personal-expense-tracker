@@ -28,4 +28,19 @@ async function getAllExpenses(req, res){
     });
   }
 }
-module.exports = {createExpense,getAllExpenses}
+
+async function updateExpense(req, res) {
+  try {
+    const userId = 1;
+    const updatedExpense = await expenseService.updateExpense(userId,req.params.id,req.body);
+    return res.status(200).json(updatedExpense);
+  } catch (err) {
+    return res.status(500).json({
+      error: {
+        code: 'EXPENSE_NOT FOUND',
+        message: err.message,
+      },
+    });
+  }
+}
+module.exports = {createExpense,getAllExpenses,updateExpense}
