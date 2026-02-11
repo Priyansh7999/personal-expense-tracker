@@ -77,6 +77,20 @@ Allows user to create expense.
   "category": "food"
 }
 ```
+### Get All Expenses
+Retrieve all expenses with optional filters.
+- GET http://localhost:3000/v1/expense
+- GET http://localhost:3000/v1/expense?category=food
+- GET http://localhost:3000/v1/expense?startDate=2024-02-01&endDate=2024-02-28
+- GET http://localhost:3000/v1/expense?minAmount=100&maxAmount=500
+
+**Query Parameters:**
+- `category` - Filter by expense category 
+- `paymentMethod` - Filter by payment method
+- `startDate` - Filter expenses from this date onwards (YYYY-MM-DD)
+- `endDate` - Filter expenses up to this date (YYYY-MM-DD)
+- `minAmount` - Filter expenses with amount greater than or equal to this value
+- `maxAmount` - Filter expenses with amount less than or equal to this value
 
 ## How to Run the Project
 ### Prerequisites
