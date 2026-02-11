@@ -1,10 +1,9 @@
-//src/services/expense/service.js
-const { getCategoryByName, createExpense: createExpenseRepo } = require('../repositories/expense.repository.js');
+const expenseRepository = require('../repositories/expense.repository.js');
 const { v4: uuidv4 } = require('uuid');
 
 async function createExpense(userId, expenseData) {
   const categoryName = expenseData.category;
-  const category = await getCategoryByName(categoryName);
+  const category = await expenseRepository.getCategoryByName(categoryName);
 
   if (!category) {
     throw new Error('Invalid category');
@@ -22,7 +21,7 @@ async function createExpense(userId, expenseData) {
     transactionDate: expenseData.transactionDate,
   };
 
-  const expense = await createExpenseRepo(expensePayload);
+  const expense = await expenseRepository.createExpense(expensePayload);
 
   return {
     ...expense,
@@ -30,4 +29,28 @@ async function createExpense(userId, expenseData) {
   };
 }
 
-module.exports = { createExpense };
+const getAllExpenses=async(userId, queryParams)=>{
+  return await expenseRepository.getAllExpenses(userId, queryParams);
+}
+
+async function updateExpense(userId, expenseId, updateData) {
+  const existingExpense = await expenseRepository.getExpenseById(expenseId);
+  if (!existingExpense) {
+    throw new Error('Expense not found');
+  }
+  const getUserId=await expenseRepository.getUserId(expenseId);
+  if(userId!=getUserId){
+    throw new Error(`Expense not found for user id ${userId}`);
+  }
+
+  if (updateData.category) {
+    const category = await expenseRepository.getCategoryByName(updateData.category);
+    if (!category) {
+      throw new Error('Invalid category');
+    }
+    updateData.categoryId = category.id;
+  }
+  const updatedExpense = await expenseRepository.updateExpense(userId,expenseId,updateData);
+  return {...updatedExpense,category: updateData.category};
+}
+module.exports = { createExpense,getAllExpenses,updateExpense};

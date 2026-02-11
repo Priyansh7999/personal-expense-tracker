@@ -77,7 +77,51 @@ Allows user to create expense.
   "category": "food"
 }
 ```
+### Get All Expenses
+Retrieve all expenses with optional filters.
+- GET http://localhost:3000/v1/expense
+- GET http://localhost:3000/v1/expense?category=food
+- GET http://localhost:3000/v1/expense?startDate=2024-02-01&endDate=2024-02-28
+- GET http://localhost:3000/v1/expense?minAmount=100&maxAmount=500
 
+**Query Parameters:**
+- `category` - Filter by expense category 
+- `paymentMethod` - Filter by payment method
+- `startDate` - Filter expenses from this date onwards (YYYY-MM-DD)
+- `endDate` - Filter expenses up to this date (YYYY-MM-DD)
+- `minAmount` - Filter expenses with amount greater than or equal to this value
+- `maxAmount` - Filter expenses with amount less than or equal to this value
+
+### Update Expense
+Allows a user to update an existing expense. Only non-restricted fields can be updated (id, createdAt, userId cannot be updated)
+- Endpoint: PUT /v1/expense/:id
+- id – ID of the expense to update
+- Request Body
+```code
+{
+  "title":"new title",
+  "description":"updated description",
+  "category":"travel",
+  "paymentMethod":"upi",
+  "amount": "200.75",
+  "transactionDate":"2026-02-11"
+}
+```
+- Expected Response
+```code
+{
+  "id": "uuid",
+  "userId": 1,
+  "title": "new title",
+  "description": "updated description",
+  "categoryId": 3,
+  "paymentMethod": "upi",
+  "amount": "200.75",
+  "transactionDate": "2026-02-11",
+  "createdAt": "<timestamps>",
+  "category": "travel"
+}
+```
 ## How to Run the Project
 ### Prerequisites
 Make sure you have these installed before starting:

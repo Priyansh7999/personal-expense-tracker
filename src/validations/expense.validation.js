@@ -44,5 +44,6 @@ const createExpenseSchema = z
     amount: amountValidation,
     transactionDate: transactionDateValidation,
   })
+const updateExpenseSchema = createExpenseSchema.partial();
 
-module.exports = {createExpenseSchema};
+module.exports = {createExpenseSchema,updateExpenseSchema};

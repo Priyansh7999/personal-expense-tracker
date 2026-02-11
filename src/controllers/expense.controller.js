@@ -14,4 +14,33 @@ async function createExpense(req, res) {
     });
   }
 }
-module.exports = {createExpense}
+async function getAllExpenses(req, res){
+  try {
+    const userId = 1;
+    const expenses = await expenseService.getAllExpenses(userId,req.query);
+    return res.status(200).json(expenses);
+  } catch (err) {
+    return res.status(500).json({
+      error: {
+        code: 'INTERNAL_SERVER_ERROR',
+        message: err.message,
+      },
+    });
+  }
+}
+
+async function updateExpense(req, res) {
+  try {
+    const userId = 1;
+    const updatedExpense = await expenseService.updateExpense(userId,req.params.id,req.body);
+    return res.status(200).json(updatedExpense);
+  } catch (err) {
+    return res.status(500).json({
+      error: {
+        code: 'EXPENSE_NOT FOUND',
+        message: err.message,
+      },
+    });
+  }
+}
+module.exports = {createExpense,getAllExpenses,updateExpense}

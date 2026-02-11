@@ -2,7 +2,8 @@
 const db = require('../db/index');
 const { expenses } = require('../models/schema/expenses.schema');
 const { categories } = require('../models/schema/categories.schema');
-const { eq } = require('drizzle-orm');
+const { eq, gte, lte } = require('drizzle-orm');
+
 class ExpenseRepository {
   async getCategoryByName(name){
     const result = await db.select().from(categories).where(eq(categories.name, name));
@@ -11,6 +12,39 @@ class ExpenseRepository {
   async createExpense(expenseData){
     const [inserted] = await db.insert(expenses).values(expenseData).returning();
     return inserted;
+  }
+
+  async getAllExpenses(userId, queryParams){
+    let result = db.select().from(expenses).where(eq(expenses.userId,userId));
+    if (queryParams.category) {
+      const categoryName = queryParams.category.toLowerCase().trim();
+      const category = await this.getCategoryByName(categoryName);
+      result = result.where(eq(expenses.categoryId, category.id));
+    }
+    if(queryParams.paymentMethod){
+      const method = queryParams.paymentMethod.toLowerCase().trim();
+      result = result.where(eq(expenses.paymentMethod, method));
+    }
+    if(queryParams.startDate) result = result.where(gte(expenses.transactionDate, queryParams.startDate));
+    if (queryParams.endDate) result = result.where(lte(expenses.transactionDate, queryParams.endDate));
+
+    if (queryParams.minAmount)result =result.where(gte(expenses.amount, queryParams.minAmount));
+    if (queryParams.maxAmount) result = result.where(lte(expenses.amount, queryParams.maxAmount));
+    
+    return await result;
+  }
+
+  async getExpenseById(id) {
+    const result = await db.select().from(expenses).where(eq(expenses.id, id));
+    return result[0] || null;
+  }
+
+  async getUserId(expenseId){
+    const result = await db.select({ userId: expenses.userId }).from(expenses).where(eq(expenses.id, expenseId))
+  }
+  async updateExpense(id, updateData) {
+    const updated = await db.update(expenses).set(updateData).where(eq(expenses.id, id)).returning();
+    return updated[0];
   }
 }
 module.exports=new ExpenseRepository();
