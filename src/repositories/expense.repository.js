@@ -38,5 +38,10 @@ class ExpenseRepository {
     const result = await db.select().from(expenses).where(eq(expenses.id, id));
     return result[0] || null;
   }
+
+  async updateExpense(id, updateData) {
+    const updated = await db.update(expenses).set(updateData).where(eq(expenses.id, id)).returning();
+    return updated[0];
+  }
 }
 module.exports=new ExpenseRepository();
