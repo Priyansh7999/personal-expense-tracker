@@ -32,4 +32,25 @@ async function createExpense(userId, expenseData) {
 const getAllExpenses=async(userId, queryParams)=>{
   return await expenseRepository.getAllExpenses(userId, queryParams);
 }
-module.exports = { createExpense,getAllExpenses};
+
+async function updateExpense(userId, expenseId, updateData) {
+  const existingExpense = await expenseRepository.getExpenseById(expenseId);
+  if (!existingExpense) {
+    throw new Error('Expense not found');
+  }
+  const getUserId=await expenseRepository.getUserId(expenseId);
+  if(userId!=getUserId){
+    throw new Error(`Expense not found for user id ${userId}`);
+  }
+
+  if (updateData.category) {
+    const category = await expenseRepository.getCategoryByName(updateData.category);
+    if (!category) {
+      throw new Error('Invalid category');
+    }
+    updateData.categoryId = category.id;
+  }
+  const updatedExpense = await expenseRepository.updateExpense(userId,expenseId,updateData);
+  return {...updatedExpense,category: updateData.category};
+}
+module.exports = { createExpense,getAllExpenses,updateExpense};
