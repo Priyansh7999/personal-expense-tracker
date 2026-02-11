@@ -39,6 +39,9 @@ class ExpenseRepository {
     return result[0] || null;
   }
 
+  async getUserId(expenseId){
+    const result = await db.select({ userId: expenses.userId }).from(expenses).where(eq(expenses.id, expenseId))
+  }
   async updateExpense(id, updateData) {
     const updated = await db.update(expenses).set(updateData).where(eq(expenses.id, id)).returning();
     return updated[0];
